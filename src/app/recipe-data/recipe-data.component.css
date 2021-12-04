@@ -1,0 +1,24 @@
+
+.recipe-input {
+font-family: monospace;
+overflow: hidden;
+width: 124ch;
+}
+
+.different {
+    display: inline;
+    background-color: lightsalmon
+    
+} 
+
+.mat-form-field-wrapper{
+    margin: 4px 0;
+  }
+
+.mat-form-field {    
+    padding: 5px;
+}
+
+.warning {
+    background-color: red;
+}

@@ -1,0 +1,196 @@
+<mat-card class="warning">
+    <mat-card-title>Warning</mat-card-title>
+    <mat-card-content>
+        <p>
+            The generated recipes are potentially dangerous since this is currently based purely on trial and error!
+            <br>
+            Use them at your own risk.
+        </p>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-card-title>Recipes</mat-card-title>
+    <mat-card-content>
+        <mat-form-field class="recipe-input">
+            <mat-label>Input</mat-label>
+            <textarea matInput id="in" placeholder="recipe" (keyup)="calculate(recipeIn.value)" #recipeIn
+                class="recipe-input" cdkTextareaAutosize>{{recipe.originalCookProfile.toHexData()}}</textarea>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="recipe-input">
+            <mat-label>Result</mat-label>
+            <textarea matInput readonly="true" id="out" placeholder="recipe" class="recipe-input"
+                cdkTextareaAutosize>{{recipe.cookProfile.toHexData()}}</textarea>
+        </mat-form-field>
+        <mat-card-actions>
+            <button mat-button [cdkCopyToClipboard]="recipe.cookProfile.toHexData()">Copy to clipboard</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-card-title>Settings</mat-card-title>
+    <mat-card-content>
+
+        <mat-form-field>
+            <mat-label>Recipe Id</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getId() }}" #recipeId
+                (input)="recipe.cookProfile.setId(recipeId.value)" />
+        </mat-form-field>
+        <br>
+
+        <mat-form-field>
+            <mat-label>Type</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getType() }}" disabled />
+        </mat-form-field>
+        <br>
+
+        <mat-form-field>
+            <mat-label>Last Temperature</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getLastTemperature() }}" #lastTemp
+                (input)="recipe.cookProfile.setLastTemperature(lastTemp.value)" />
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Duration Hour</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getDurationHour() }}" #durationHour
+                (input)="recipe.cookProfile.setDurationHour(durationHour.value)" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Duration Minute</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getDurationMinute() }}" #durationMinute
+                (input)="recipe.cookProfile.setDurationMinute(durationMinute.value)" />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+            <mat-label>Duration Max Hour</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getDurationMaxHour() }}" #durationMaxHour
+                (input)="recipe.cookProfile.setDurationMax(durationMaxHour.value, durationMaxMinute.value)" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Duration Max Minute</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getDurationMaxMinute() }}" #durationMaxMinute
+                (input)="recipe.cookProfile.setDurationMax(durationMaxHour.value, durationMaxMinute.value)" />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+            <mat-label>Duration Min Hour</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getDurationMinHour() }}" #durationMinHour
+                (input)="recipe.cookProfile.setDurationMin(durationMinHour.value, durationMinMinute.value)" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Duration Min Minute</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getDurationMinMinute() }}" #durationMinMinute
+                (input)="recipe.cookProfile.setDurationMin(durationMinHour.value, durationMinMinute.value)" />
+        </mat-form-field>
+
+        <br>
+        <mat-checkbox class="example-margin" [checked]="recipe.cookProfile.isCanSchedule()"
+            (change)="recipe.cookProfile.setCanSchedule($event.checked)">Can Schedule</mat-checkbox>
+        <br>
+        <mat-checkbox class="example-margin" [checked]="recipe.cookProfile.isScheduleEnabled()"
+            (change)="recipe.cookProfile.setScheduleEnabled($event.checked)">Schedule</mat-checkbox>
+        <br>
+        <mat-form-field>
+            <mat-label>Schedule Hour</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getScheduleHour() }}" #scheduleHour
+                (input)="recipe.cookProfile.setScheduleHour(scheduleHour.value)" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Schedule Minute</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getScheduleMinute() }}" #scheduleMinute
+                (input)="recipe.cookProfile.setScheduleMinute(scheduleMinute.value)" />
+        </mat-form-field>
+        <br>
+        <mat-checkbox class="example-margin" [checked]="recipe.cookProfile.isCanAutoKeepWarm()"
+            (change)="recipe.cookProfile.setCanAutoKeepWarm($event.checked)">Can Auto Keep Warm</mat-checkbox>
+        <br>
+        <mat-checkbox class="example-margin" [checked]="recipe.cookProfile.isAutoKeepWarmEnabled()"
+            (change)="recipe.cookProfile.setAutoKeepWarmEnabled($event.checked)">Auto Keep Warm</mat-checkbox>
+        <br>
+
+        <mat-checkbox class="example-margin" [checked]="recipe.cookProfile.isCanSetTime()" disabled>Can Set Time
+        </mat-checkbox>
+        <br>
+
+        <mat-checkbox class="example-margin" [checked]="recipe.cookProfile.isFavorite()"
+            (change)="recipe.cookProfile.setFavorite($event.checked)">Favourite</mat-checkbox>
+        <br>
+
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <input matInput value="{{ recipe.cookProfile.getCatagory() }}" disabled />
+        </mat-form-field>
+        <br />
+
+        <mat-checkbox class="example-margin" [checked]="recipe.cookProfile.isCanChooseRice()" disabled>Can Choose
+            Rice
+        </mat-checkbox>
+        <br>
+
+        <mat-checkbox class="example-margin" [checked]="recipe.cookProfile.isCanShowCookDetail()" disabled>Can Show
+            Cook
+            Detail</mat-checkbox>
+        <br>
+        <mat-checkbox class="example-margin" [checked]="recipe.cookProfile.isCookingCurve()" disabled>Cooking Curve
+        </mat-checkbox>
+        <br>
+        <mat-checkbox class="example-margin" [checked]="recipe.cookProfile.isCookingProgress()" disabled>Cooking
+            Progress
+        </mat-checkbox>
+        <br>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-slide-toggle [checked]="showDiffs" (change)="showDiffs = !showDiffs">Show Diffs </mat-slide-toggle>
+</mat-card>
+
+<div *ngIf="showDiffs">
+
+    <mat-card>
+        <mat-card-title>Decimal Diff</mat-card-title>
+        <mat-card-content>
+            Recipe In<br />
+            <span *ngFor="let val of recipe.originalCookProfile.data; index as i;"
+                [class]="getClass(val, recipe.cookProfile.data[i] )">{{ val.toString().padStart(3, "0") }} </span>
+            <br />
+            Recipe Out<br />
+            <span *ngFor="let val of recipe.cookProfile.data; index as i;"
+                [class]="getClass(val, recipe.originalCookProfile.data[i] )">{{ val.toString().padStart(3, "0") }}
+            </span>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-title>Binary Diff</mat-card-title>
+        <mat-card-content>
+            Recipe In<br />
+            <span *ngFor="let val of getOriginalRecipeAsBitArray(); index as i;">
+                <span *ngFor="let bit of val; index as j;"
+                    [class]="getClass(bit, getRecipeAsBitArray()[i][j])">{{bit}}</span>
+                <span>&nbsp;&#32;</span>
+            </span>
+            <br />Recipe Out<br />
+            <span *ngFor="let val of getRecipeAsBitArray(); index as i;">
+                <span *ngFor="let bit of val; index as j;"
+                    [class]="getClass(bit, getOriginalRecipeAsBitArray()[i][j])">{{bit}}</span>
+                <span>&nbsp;&#32;</span>
+            </span>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-title>Hexadecimal Diff</mat-card-title>
+        <mat-card-content>
+            Recipe In<br />
+            <span *ngFor="let val of recipe.originalCookProfile.data; index as i;"
+                [class]="getClass(val, recipe.cookProfile.data[i] )">{{ val.toString(16).padStart(2, "0") }} </span>
+            <br />Recipe Out<br />
+            <span *ngFor="let val of recipe.cookProfile.data; index as i;"
+                [class]="getClass(val, recipe.originalCookProfile.data[i] )">{{ val.toString(16).padStart(2, "0") }}
+            </span>
+        </mat-card-content>
+    </mat-card>
+</div>
